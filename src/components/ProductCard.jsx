@@ -10,6 +10,10 @@ function ProductCard({ product }) {
   const originalPrice = Number(
     product.original_price || product.originalPrice || product.price || 0
   );
+  const discountPercentage =
+  originalPrice > price
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
 
   const stock = Number(product.quantity || 0);
   const isOutOfStock = stock <= 0;
@@ -42,6 +46,12 @@ function ProductCard({ product }) {
           <strong>
             Rp{price.toLocaleString("id-ID")}
           </strong>
+
+          {discountPercentage > 0 && (
+            <span className="discount-badge">
+              Diskon {discountPercentage}%
+            </span>
+          )}
         </div>
 
         <p>Stok: {stock > 0 ? stock : "Habis"}</p>
