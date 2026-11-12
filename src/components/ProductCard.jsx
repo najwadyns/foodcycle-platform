@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
@@ -7,13 +8,18 @@ function ProductCard({ product }) {
     "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800";
 
   const price = Number(product.price || 0);
+
   const originalPrice = Number(
-    product.original_price || product.originalPrice || product.price || 0
+    product.original_price ||
+      product.originalPrice ||
+      product.price ||
+      0
   );
+
   const discountPercentage =
-  originalPrice > price
-    ? Math.round(((originalPrice - price) / originalPrice) * 100)
-    : 0;
+    originalPrice > price
+      ? Math.round(((originalPrice - price) / originalPrice) * 100)
+      : 0;
 
   const stock = Number(product.quantity || 0);
   const isOutOfStock = stock <= 0;
@@ -29,14 +35,63 @@ function ProductCard({ product }) {
     expirationStatus = "Masih Aman";
   }
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const favorites =
+      JSON.parse(localStorage.getItem("foodcycle-favorites")) || [];
+
+    setIsFavorite(
+      favorites.some((id) => Number(id) === Number(product.id))
+    );
+  }, [product.id]);
+
+  const toggleFavorite = () => {
+    const favorites =
+      JSON.parse(localStorage.getItem("foodcycle-favorites")) || [];
+
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter(
+        (id) => Number(id) !== Number(product.id)
+      );
+
+      localStorage.setItem(
+        "foodcycle-favorites",
+        JSON.stringify(updatedFavorites)
+      );
+
+      setIsFavorite(false);
+    } else {
+      favorites.push(product.id);
+
+      localStorage.setItem(
+        "foodcycle-favorites",
+        JSON.stringify(favorites)
+      );
+
+      setIsFavorite(true);
+    }
+  };
+
   return (
     <div className="product-card">
-      <img src={imageUrl} alt={product.name} />
+      <div className="product-image-wrapper">
+        <img src={imageUrl} alt={product.name} />
+
+        <button
+          className={`favorite-button ${
+            isFavorite ? "favorite-active" : ""
+          }`}
+          onClick={toggleFavorite}
+          aria-label="Tambah ke favorit"
+        >
+          {isFavorite ? "♥" : "♡"}
+        </button>
+      </div>
 
       <div className="product-content">
         <h3>{product.name}</h3>
-        <p>{product.seller}</p> 
-        
+        <p>{product.seller}</p>
 
         <div className="price-row">
           <span className="old-price">
@@ -71,7 +126,9 @@ function ProductCard({ product }) {
         </p>
 
         <Link
-          className={`button ${isOutOfStock ? "out-of-stock" : ""}`}
+          className={`button ${
+            isOutOfStock ? "out-of-stock" : ""
+          }`}
           to={`/products/${product.id}`}
         >
           {isOutOfStock ? "Stok Habis" : "Lihat Detail"}

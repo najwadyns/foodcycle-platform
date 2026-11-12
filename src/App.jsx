@@ -36,6 +36,8 @@ function App() {
       return;
     }
 
+    console.log("PRODUCT DATA:", data);
+
     setProducts(data);
     setLoading(false);
   };
