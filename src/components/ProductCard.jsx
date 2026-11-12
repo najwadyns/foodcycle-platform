@@ -31,8 +31,8 @@ function ProductCard({ product }) {
 
       <div className="product-content">
         <h3>{product.name}</h3>
-        <p>{product.seller}</p>
-        <p>{product.location}</p>
+        <p>{product.seller}</p> 
+        
 
         <div className="price-row">
           <span className="old-price">
