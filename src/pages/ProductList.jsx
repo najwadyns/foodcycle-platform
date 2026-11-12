@@ -7,6 +7,12 @@ function ProductList({ products }) {
   const [priceFilter, setPriceFilter] = useState("all");
   const [sortPrice, setSortPrice] = useState("default");
   const [stockFilter, setStockFilter] = useState("all");
+  const resetFilters = () => {
+  setSearch("");
+  setPriceFilter("all");
+  setSortPrice("default");
+  setStockFilter("all");
+};
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -71,7 +77,7 @@ function ProductList({ products }) {
             <option value="10to20">Rp10.000 - Rp20.000</option>
             <option value="over20">Di atas Rp20.000</option>
           </select>
-          
+
           <select
             value={stockFilter}
             onChange={(e) => setStockFilter(e.target.value)}
@@ -90,6 +96,12 @@ function ProductList({ products }) {
             <option value="lowToHigh">Harga Terendah</option>
             <option value="highToLow">Harga Tertinggi</option>
           </select>
+          <button
+            className="reset-filter-button"
+            onClick={resetFilters}
+          >
+            Reset Filter
+          </button>
         </div>
 
         <div className="product-grid">
