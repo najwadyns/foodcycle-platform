@@ -11,6 +11,9 @@ function ProductCard({ product }) {
     product.original_price || product.originalPrice || product.price || 0
   );
 
+  const stock = Number(product.quantity || 0);
+  const isOutOfStock = stock <= 0;
+
   const expiredTime =
     product.expired_time || product.expiredTime || "-";
 
@@ -41,24 +44,27 @@ function ProductCard({ product }) {
           </strong>
         </div>
 
-        <p>Stok: {product.quantity}</p>
+        <p>Stok: {stock > 0 ? stock : "Habis"}</p>
 
         <p>Batas konsumsi: {expiredTime}</p>
 
         <p
           className={`expiration-status ${
-          expirationStatus === "Segera Expired"
-            ? "expiring"
-            : expirationStatus === "Masih Aman"
-            ? "safe"
-            : "unknown"
-        }`}
-      >
-        Status: {expirationStatus}
-      </p>
+            expirationStatus === "Segera Expired"
+              ? "expiring"
+              : expirationStatus === "Masih Aman"
+              ? "safe"
+              : "unknown"
+          }`}
+        >
+          Status: {expirationStatus}
+        </p>
 
-        <Link className="button" to={`/products/${product.id}`}>
-          Lihat Detail
+        <Link
+          className={`button ${isOutOfStock ? "out-of-stock" : ""}`}
+          to={`/products/${product.id}`}
+        >
+          {isOutOfStock ? "Stok Habis" : "Lihat Detail"}
         </Link>
       </div>
     </div>
