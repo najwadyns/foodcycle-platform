@@ -2,17 +2,18 @@ import { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import BackButton from "../components/BackButton";
 
-function ProductList({ products }) {
+function ProductList({ products, loading }) {
   const [search, setSearch] = useState("");
   const [priceFilter, setPriceFilter] = useState("all");
   const [sortPrice, setSortPrice] = useState("default");
   const [stockFilter, setStockFilter] = useState("all");
+
   const resetFilters = () => {
-  setSearch("");
-  setPriceFilter("all");
-  setSortPrice("default");
-  setStockFilter("all");
-};
+    setSearch("");
+    setPriceFilter("all");
+    setSortPrice("default");
+    setStockFilter("all");
+  };
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -27,12 +28,12 @@ function ProductList({ products }) {
         product.price <= 20000) ||
       (priceFilter === "over20" && product.price > 20000);
 
-      const stock = Number(product.quantity || 0);
+    const stock = Number(product.quantity || 0);
 
-      const matchesStock =
-        stockFilter === "all" ||
-        (stockFilter === "available" && stock > 0) ||
-        (stockFilter === "outOfStock" && stock <= 0);
+    const matchesStock =
+      stockFilter === "all" ||
+      (stockFilter === "available" && stock > 0) ||
+      (stockFilter === "outOfStock" && stock <= 0);
 
     return matchesSearch && matchesPrice && matchesStock;
   });
@@ -78,15 +79,6 @@ function ProductList({ products }) {
             <option value="over20">Di atas Rp20.000</option>
           </select>
 
-          <select
-            value={stockFilter}
-            onChange={(e) => setStockFilter(e.target.value)}
-          >
-            <option value="all">Semua Produk</option>
-            <option value="available">Tersedia</option>
-            <option value="outOfStock">Stok Habis</option>
-          </select>
-
           {/* Urutkan Harga */}
           <select
             value={sortPrice}
@@ -96,6 +88,18 @@ function ProductList({ products }) {
             <option value="lowToHigh">Harga Terendah</option>
             <option value="highToLow">Harga Tertinggi</option>
           </select>
+
+          {/* Filter Stok */}
+          <select
+            value={stockFilter}
+            onChange={(e) => setStockFilter(e.target.value)}
+          >
+            <option value="all">Semua Produk</option>
+            <option value="available">Tersedia</option>
+            <option value="outOfStock">Stok Habis</option>
+          </select>
+
+          {/* Reset Filter */}
           <button
             className="reset-filter-button"
             onClick={resetFilters}
@@ -104,18 +108,22 @@ function ProductList({ products }) {
           </button>
         </div>
 
-        <div className="product-grid">
-          {sortedProducts.length > 0 ? (
-            sortedProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-            ))
-          ) : (
-            <p>Makanan tidak ditemukan.</p>
-          )}
-        </div>
+        {loading ? (
+          <p className="loading-message">Memuat produk...</p>
+        ) : (
+          <div className="product-grid">
+            {sortedProducts.length > 0 ? (
+              sortedProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
+              ))
+            ) : (
+              <p>Makanan tidak ditemukan.</p>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

@@ -17,8 +17,11 @@ import EditProduct from "./pages/EditProduct";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
+    setLoading(true);
+
     const { data, error } = await supabase
       .from("products")
       .select("*")
@@ -26,10 +29,12 @@ function App() {
 
     if (error) {
       console.log("ERROR FETCH PRODUCTS:", error);
+      setLoading(false);
       return;
     }
 
     setProducts(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -62,14 +67,19 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
 
-        <Route 
-        path="/home"
-        element={<Home products={products} />}
+        <Route
+          path="/home"
+          element={<Home products={products} />}
         />
 
         <Route
           path="/products"
-          element={<ProductList products={products} />}
+          element={
+            <ProductList
+              products={products}
+              loading={loading}
+            />
+          }
         />
 
         <Route

@@ -1120,3 +1120,8 @@ th {
 .reset-filter-button:hover {
   background-color: #ddd;
 }
+.loading-message {
+  text-align: center;
+  font-size: 18px;
+  margin: 40px 0;
+}
