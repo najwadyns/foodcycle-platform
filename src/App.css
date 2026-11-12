@@ -1074,3 +1074,27 @@ th {
   outline: none;
   border-color: #4caf50;
 }
+.expiration-status {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.expiration-status:has(:not(*)) {
+  color: #666;
+}
+.expiration-status {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.expiration-status.expiring {
+  color: #e67e22;
+}
+
+.expiration-status.safe {
+  color: #2e8b57;
+}
+
+.expiration-status.unknown {
+  color: #666;
+}

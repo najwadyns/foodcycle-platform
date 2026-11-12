@@ -14,6 +14,14 @@ function ProductCard({ product }) {
   const expiredTime =
     product.expired_time || product.expiredTime || "-";
 
+  let expirationStatus = "Cek Batas Konsumsi";
+
+  if (expiredTime.toLowerCase().includes("hari ini")) {
+    expirationStatus = "Segera Expired";
+  } else if (expiredTime.toLowerCase().includes("besok")) {
+    expirationStatus = "Masih Aman";
+  }
+
   return (
     <div className="product-card">
       <img src={imageUrl} alt={product.name} />
@@ -34,7 +42,20 @@ function ProductCard({ product }) {
         </div>
 
         <p>Stok: {product.quantity}</p>
+
         <p>Batas konsumsi: {expiredTime}</p>
+
+        <p
+          className={`expiration-status ${
+          expirationStatus === "Segera Expired"
+            ? "expiring"
+            : expirationStatus === "Masih Aman"
+            ? "safe"
+            : "unknown"
+        }`}
+      >
+        Status: {expirationStatus}
+      </p>
 
         <Link className="button" to={`/products/${product.id}`}>
           Lihat Detail
