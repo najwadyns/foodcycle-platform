@@ -6,6 +6,7 @@ function ProductList({ products }) {
   const [search, setSearch] = useState("");
   const [priceFilter, setPriceFilter] = useState("all");
   const [sortPrice, setSortPrice] = useState("default");
+  const [stockFilter, setStockFilter] = useState("all");
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -20,7 +21,14 @@ function ProductList({ products }) {
         product.price <= 20000) ||
       (priceFilter === "over20" && product.price > 20000);
 
-    return matchesSearch && matchesPrice;
+      const stock = Number(product.quantity || 0);
+
+      const matchesStock =
+        stockFilter === "all" ||
+        (stockFilter === "available" && stock > 0) ||
+        (stockFilter === "outOfStock" && stock <= 0);
+
+    return matchesSearch && matchesPrice && matchesStock;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -62,6 +70,15 @@ function ProductList({ products }) {
             <option value="under10">Di bawah Rp10.000</option>
             <option value="10to20">Rp10.000 - Rp20.000</option>
             <option value="over20">Di atas Rp20.000</option>
+          </select>
+          
+          <select
+            value={stockFilter}
+            onChange={(e) => setStockFilter(e.target.value)}
+          >
+            <option value="all">Semua Produk</option>
+            <option value="available">Tersedia</option>
+            <option value="outOfStock">Stok Habis</option>
           </select>
 
           {/* Urutkan Harga */}
