@@ -1,75 +1,104 @@
-# FoodCycle App
+# FoodCycle Platform
 
-FoodCycle App adalah aplikasi berbasis web yang dirancang untuk membantu mengurangi pemborosan makanan dengan menghubungkan penjual yang memiliki makanan surplus dengan pembeli yang ingin membeli makanan dengan harga lebih terjangkau.
+FoodCycle Platform adalah aplikasi web marketplace makanan surplus yang menghubungkan penjual dengan pembeli untuk membantu mengurangi food waste dan menyediakan makanan dengan harga yang lebih terjangkau.
 
-## Latar Belakang Proyek
+## Project Overview
 
-Pemborosan makanan atau food waste masih menjadi masalah yang sering terjadi dalam kehidupan sehari-hari. Banyak makanan layak konsumsi dari restoran, penjual makanan, rumah tangga, maupun lingkungan kampus yang terbuang karena tidak ada platform sederhana untuk menjual atau mendistribusikannya sebelum makanan tersebut tidak layak konsumsi.
+FoodCycle dikembangkan sebagai platform untuk mempermudah penjual menawarkan makanan surplus yang masih layak konsumsi. Pembeli dapat melihat produk yang tersedia, mencari makanan berdasarkan nama, menggunakan filter harga dan stok, melihat informasi kedaluwarsa, hingga melakukan pemesanan melalui checkout.
 
-Masalah ini dapat menimbulkan dampak lingkungan, sosial, dan ekonomi. Oleh karena itu, dibutuhkan sebuah solusi digital yang dapat membantu mengurangi makanan terbuang dan mempermudah distribusi makanan surplus.
+Project ini merupakan pengembangan lanjutan dari aplikasi FoodCycle dengan fokus pada peningkatan user experience, validasi pemesanan, product filtering, order management, dan responsive design.
 
-## Rumusan Masalah
+## Features
 
-Banyak penjual makanan masih membuang makanan surplus yang sebenarnya masih layak konsumsi karena tidak memiliki cara yang mudah untuk menjual atau mendistribusikannya secara cepat. Di sisi lain, pembeli membutuhkan pilihan makanan yang lebih terjangkau. Oleh karena itu, dibutuhkan platform digital yang dapat mempertemukan penjual makanan surplus dengan pembeli.
+### Authentication
+- Register akun
+- Login akun
+- Supabase Authentication
 
-## Solusi yang Diusulkan
+### Product Marketplace
+- Menampilkan daftar makanan surplus
+- Search produk berdasarkan nama
+- Filter berdasarkan harga
+- Sorting harga dari terendah hingga tertinggi
+- Filter produk berdasarkan ketersediaan stok
+- Reset filter
+- Load more products
+- Informasi harga asli dan harga setelah diskon
+- Persentase diskon
+- Informasi jumlah stok
+- Status batas konsumsi
+- Responsive product grid
 
-FoodCycle App menyediakan platform marketplace sederhana di mana penjual dapat mengunggah produk makanan surplus, sedangkan pembeli dapat melihat, memilih, dan memesan produk yang tersedia. Aplikasi ini bertujuan untuk mengurangi pemborosan makanan dan mendukung akses makanan yang lebih terjangkau.
-
-## Fitur Utama
-
-Fitur utama FoodCycle App adalah marketplace makanan surplus, di mana penjual dapat mengunggah produk makanan dan pembeli dapat melakukan pemesanan.
-
-## Minimum Viable Product (MVP)
-
-Fitur MVP yang akan dikembangkan meliputi:
-
-- Registrasi dan login
-- Unggah produk makanan surplus
-- Melihat daftar produk
+### Product Detail & Wishlist
 - Melihat detail produk
-- Pemesanan produk
-- Checkout sederhana
-- Dashboard penjual
+- Add/remove favorite product
+- Wishlist disimpan menggunakan localStorage
+- Indikator produk yang sudah difavoritkan
 
-## Pengembangan Selanjutnya
+### Checkout
+- Input nama pembeli
+- Pemilihan jumlah produk
+- Validasi nama dan quantity
+- Validasi stok
+- Perhitungan subtotal
+- Service fee
+- Total pembayaran
+- Loading state saat checkout
+- Penyimpanan order ke Supabase
 
-Beberapa fitur yang direncanakan untuk pengembangan selanjutnya adalah:
+### Order Management
+- Menampilkan riwayat pesanan
+- Filter berdasarkan status pesanan
+- Status pesanan:
+  - Menunggu
+  - Dikonfirmasi
+  - Selesai
+  - Dibatalkan
+- Refresh data pesanan
+- Informasi tanggal dan total pesanan
 
-- Integrasi pembayaran online
-- Tracking pesanan secara detail
-- Verifikasi akun penjual
-- Dashboard laporan admin
-
-## Metode SDLC yang Digunakan
-
-Proyek ini menggunakan metode Agile/Scrum karena aplikasi dikembangkan secara bertahap melalui beberapa iterasi. Dengan metode ini, tim dapat melakukan evaluasi dan perbaikan berdasarkan progress serta masukan selama proses pengembangan.
+### User Experience
+- Loading state
+- Error state
+- Retry button ketika gagal mengambil data
+- Empty state ketika produk tidak ditemukan
+- Responsive layout untuk desktop dan mobile
+- Hover dan focus interaction
 
 ## Tech Stack
 
-- Frontend: React.js
-- Build Tool: Vite
-- Version Control: GitHub
-- Project Management Tool: GitHub Projects
+- React.js
+- Vite
+- React Router
+- Supabase
+- JavaScript
+- HTML & CSS
+- Git & GitHub
 
-## Status Proyek Saat Ini
+## Database
 
-Proyek ini masih dalam tahap pengembangan. Repository GitHub telah dibuat, struktur awal React/Vite telah diunggah, dan tim sedang menyiapkan fitur utama serta dokumentasi proyek.
+FoodCycle menggunakan Supabase untuk mengelola data aplikasi, termasuk:
 
-## Cara Menjalankan Proyek
+- Product data
+- Product stock
+- Order data
+- User authentication
 
-1. Clone repository ini:
-   git clone https://github.com/Jez-z/foodcycle-app.git
+## Application Flow
 
-2. Buka folder proyek:
-   cd foodcycle-app
-
-3. Install dependencies:
-   npm install
-
-4. Jalankan proyek:
-   npm run dev
-
-## Hasil yang Diharapkan
-
-Hasil yang diharapkan dari proyek ini adalah aplikasi web yang memungkinkan penjual mengunggah produk makanan surplus dan pembeli melihat serta memesan makanan yang tersedia.
+```text
+User
+  ↓
+Login / Register
+  ↓
+Product Marketplace
+  ↓
+Search / Filter / Sort
+  ↓
+Product Detail
+  ↓
+Checkout
+  ↓
+Order Created
+  ↓
+Order List
