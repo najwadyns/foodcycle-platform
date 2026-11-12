@@ -1056,3 +1056,21 @@ th {
     justify-self: start;
   }
 }
+.search-box {
+  margin: 20px 0;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
