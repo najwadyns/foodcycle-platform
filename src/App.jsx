@@ -18,9 +18,11 @@ import EditProduct from "./pages/EditProduct";
 function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchProducts = async () => {
     setLoading(true);
+    setError("");
 
     const { data, error } = await supabase
       .from("products")
@@ -29,6 +31,7 @@ function App() {
 
     if (error) {
       console.log("ERROR FETCH PRODUCTS:", error);
+      setError("Gagal memuat produk. Silakan coba lagi.");
       setLoading(false);
       return;
     }
@@ -78,6 +81,8 @@ function App() {
             <ProductList
               products={products}
               loading={loading}
+              error={error}
+              fetchProducts={fetchProducts}
             />
           }
         />

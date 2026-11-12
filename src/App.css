@@ -1125,3 +1125,26 @@ th {
   font-size: 18px;
   margin: 40px 0;
 }
+.error-message {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.error-message p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.retry-button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.retry-button:hover {
+  background-color: #45a049;
+}
